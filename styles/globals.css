@@ -1,0 +1,61 @@
+html,
+body {
+  --def: #96B7C4;
+  --inv: #000000;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+#nextArrow {
+  opacity: 0.8
+}
+
+#nextArrowLeft {
+  opacity: 0.8
+}
+
+#nextArrow:hover {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  background: linear-gradient(to right, transparent 20%, rgba(0, 0, 0, 0.4) 60%);
+  -webkit-transition: background-color 2000ms linear;
+  -ms-transition: background-color 2000ms linear;
+  transition: background-color 2000ms linear;
+  opacity: 1;
+}
+
+#nextArrowLeft:hover {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  background: linear-gradient(to left, transparent 20%, rgba(0, 0, 0, 0.4) 60%);
+  -webkit-transition: background-color 2000ms linear;
+  -ms-transition: background-color 2000ms linear;
+  transition: background-color 2000ms linear;
+  opacity: 1;
+}
+
+.carousel .control-next.control-arrow:before {
+  border-left: 8px solid #fff;
+  width: 100px;
+  font-size: 1000px;
+}
+
+.carousel .control-next.control-arrow:before .nav-btn {
+  border-left: 8px solid #fff;
+  width: 100px;
+}
