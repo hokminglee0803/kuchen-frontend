@@ -7,16 +7,23 @@ import { I18nProvider } from 'next-localization';
 import { useRouter } from 'next/router';
 import { LocalizationProvider } from '@mui/lab';
 import DateAdapter from '@mui/lab/AdapterMoment';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '../styles/style.css'
-import "react-responsive-carousel/lib/styles/carousel.css";
-import "react-responsive-carousel/lib/styles/carousel.min.css"
-import CommonSpeedDial from '../components/CommonSpeedDial';
+import dynamic from 'next/dynamic'
+import AnimatedCursor from 'react-animated-cursor'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas);
+
+const AnimatedCursorComponent: AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
+  ssr: false
+});
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
 
   if (typeof window === 'undefined') {
-    console.log('[Dance Union Website] Greeting from server side!');
+    console.log('[Kuchen Website] Greeting from server side!');
   }
 
   const { locale } = useRouter();
@@ -30,6 +37,15 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
       >
         <LocalizationProvider dateAdapter={DateAdapter}>
           <>
+            <style global jsx>
+              {
+                `
+                  html * {
+                    font-family: 'Montserrat','微軟正黑體', sans-serif !important;
+                  }
+                `
+              }
+            </style>
             <Head>
               <meta
                 name="viewport"
@@ -37,7 +53,12 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
               />
             </Head>
             <Component {...rest} />
-            <CommonSpeedDial/>
+            <AnimatedCursorComponent
+              color={'246, 187, 100'}
+              outerSize={40}
+              outerScale={2}
+
+            />
           </>
         </LocalizationProvider>
       </I18nProvider>

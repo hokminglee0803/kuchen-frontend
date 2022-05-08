@@ -1,9 +1,13 @@
 {
-    "seo_title": "",
-    "meta_description": "",
-    "meta_keywords": "",
-    "og_title": "",
-    "og_description": "",
-    "og_url": "",
-    "og_image_url": ""
+    "about_us": "ABOUT US",
+    "projects": "PROJECTS",
+    "partners": "PARTNERS",
+    "blog": "BLOG",
+    "installation": "INSTALLATION",
+    "contact_us": "CONTACT US",
+    "address": "Address: ",
+    "office_hour": "Office Hour: ",
+    "whatsapp": "Whatsapp: ",
+    "phone": "Phone: ",
+    "email": "Email: "
 }

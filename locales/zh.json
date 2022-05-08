@@ -1,9 +1,13 @@
 {
-    "seo_title": "",
-    "meta_description": "",
-    "meta_keywords": "",
-    "og_title": "",
-    "og_description": "",
-    "og_url": "",
-    "og_image_url": ""
+    "about_us": "關於我們",
+    "projects": "項目",
+    "partners": "合作夥伴",
+    "blog": "博客",
+    "installation": "安裝",
+    "contact_us": "聯絡我們",
+    "address": "地址:  ",
+    "office_hour": "辦公時間:  ",
+    "whatsapp": "Whatsapp:  ",
+    "phone": "電話:  ",
+    "email": "郵箱:  "
 }

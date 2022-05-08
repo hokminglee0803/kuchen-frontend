@@ -10,6 +10,7 @@ import Document, {
 // import { AppProps } from 'next/app';
 // import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/styles';
 
+const GA_ID = '';
 export default class MyDocument extends Document {
 
     static async getInitialProps(ctx: DocumentContext) {
@@ -29,16 +30,18 @@ export default class MyDocument extends Document {
                     <meta charSet="utf-8" />
                     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"></meta>
                     <meta name="google-site-verification" content="HSeiJF1wIPEmRWl27NIHwrslEwWKO6YuN0AP2IkOVgk" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
                     <link
                         rel="shortcut icon"
                         type="image/x-icon"
-                        href="https://images.ctfassets.net/k5r307sl52db/1DQVJnEJoJVJvs40xGBOeg/c60f47d9679cabc010a08b1659de39e0/logo_black_1_.png"
+                        href=""
                     />
+                    <link rel="preconnect" href="https://fonts.googleapis.com" />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" />
+                    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet" />
                     <script
                         async
-                        src={`https://www.googletagmanager.com/gtag/js?id=G-P5GEVWMHMT`}
+                        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
                     />
                     <script
                         dangerouslySetInnerHTML={{
@@ -46,31 +49,12 @@ export default class MyDocument extends Document {
                                 window.dataLayer = window.dataLayer || [];
                                 function gtag(){dataLayer.push(arguments);}
                                 gtag('js', new Date());
-                                gtag('config', 'G-P5GEVWMHMT', {
+                                gtag('config', '${GA_ID}', {
                                 page_path: window.location.pathname,
                                 });
                             `,
                         }}
                     />
-                    {/* <script dangerouslySetInnerHTML={{
-                        __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                            })(window,document,'script','dataLayer','GTM-MVQMLH5');`
-                    }}></script>
-                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P5GEVWMHMT"></script>
-                    <script>
-                        {
-                            `
-                                window.dataLayer = window.dataLayer || [];
-                                function gtag(){dataLayer.push(arguments);}
-                                gtag('js', new Date());
-
-                                gtag('config', 'G-P5GEVWMHMT');
-                            `
-                        }
-                    </script> */}
                 </Head>
                 <body>
                     <Main />

@@ -4,29 +4,23 @@ import { useI18n } from 'next-localization';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Copyright from '../components/Copyright';
 import Footer from '../components/Footer';
-import { Carousel } from 'react-responsive-carousel';
-import contentfulService from '../utils/service/contentfulService';
-import { transformBannerData, transformBlog, transformWebSettings } from '../utils/transformer';
-import { BannerType } from '../interface/Banner';
-import ActionAreaCard from '../components/ActionAreaCard';
+import ProjectCard from '../components/ProjectCard';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
+import { FooterProps } from '../interface/Footer';
 import { PageSettingProps } from '../interface/PageSetting';
-import Image from 'next/image'
-import { BlogType, BlogTypeEnum } from '../interface/Blog';
-import ReactPlayer from 'react-player/lazy'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import * as gaUtil from './../utils/ga/';
+import { ProjectCardProps } from '../interface/ProjectCard';
+import contentfulService from '../utils/service/contentfulService';
+import { transformWebSettings, transformProjectCard, translateFooter } from '../utils/transformer';
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
 interface IndexPageProps {
-  mainPageBanner: BannerType[];
-  highlight: BannerType[];
   webSettings: PageSettingProps;
-  latestNews: BlogType[];
+  projects: ProjectCardProps[];
+  footer: FooterProps;
 }
 
-const IndexPage: React.FC<IndexPageProps> = ({ mainPageBanner, highlight, webSettings, latestNews }) => {
+const IndexPage: React.FC<IndexPageProps> = ({ webSettings, projects, footer }) => {
 
   const router = useRouter();
 
@@ -42,36 +36,13 @@ const IndexPage: React.FC<IndexPageProps> = ({ mainPageBanner, highlight, webSet
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const [autoPlay, setAutoPlay] = useState(true);
-
-  const arrowStyles: React.CSSProperties = {
-    position: 'absolute',
-    zIndex: 2,
-    top: 0,
-    cursor: 'pointer',
-    height: '100%',
-    width: isDesktop ? '100px' : '60px',
-    margin: 0,
-  };
-
   useEffect(() => {
     if (init) {
-      console.log(window.location.href);
-      gaUtil.pageview(window.location.href)
-      setInit(false);
+      setInit(false)
     }
-
   }, [init])
 
-  const indicatorStyles: React.CSSProperties = {
-    background: '#fff',
-    width: 12,
-    height: 12,
-    display: 'inline-block',
-    margin: '2px',
-    marginBottom: isDesktop ? 30 : 40,
-    borderRadius: '20px'
-  };
+
 
   return (
     <div>
@@ -88,7 +59,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ mainPageBanner, highlight, webSet
         />
         <link
           rel="alternate"
-          href={`${HOME_PATH}`}
+          href={`${HOME_PATH}/en`}
           hrefLang="en-hk"
         />
         <link
@@ -100,160 +71,43 @@ const IndexPage: React.FC<IndexPageProps> = ({ mainPageBanner, highlight, webSet
         <meta property="og:type" content="website" />
         <meta property="og:title" content={webSettings?.openGraphTitle} />
         <meta property="og:description" content={webSettings?.openGraphDescription} />
-        <meta property="og:url" content={webSettings?.openGraphUrl} />
-        <meta property="og:site_name" content="Dance Union"></meta>
+        <meta property="og:url" content={`${HOME_PATH}${localePath}`} />
+        <meta property="og:site_name" content="kuchen"></meta>
         <meta property="og:image" content={webSettings?.openGraphImage} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div style={{ marginTop: 50 }} />
       <ResponsiveAppBar />
 
-      <Carousel
-        onChange={() => {
-          setAutoPlay(true);
-        }}
-        renderArrowPrev={(onClickHandler, hasPrev, label) =>
-          hasPrev && (
-            <div id={'nextArrowLeft'} onClick={onClickHandler} style={{ ...arrowStyles, left: 0 }} >
-              <Grid
-                style={{
-                  height: '100%'
-                }}
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Grid item xs={3}>
-                  <ArrowBackIosIcon fontSize='large' style={{
-                    zIndex: 999,
-                    opacity: 1,
-                    color: 'white',
-                    fontSize: 50,
-                    fontWeight: 50,
-                  }} />
-                </Grid>
-              </Grid>
-            </div>
-          )
-        }
-        renderArrowNext={(onClickHandler, hasNext, label) =>
-          hasNext && (
-            <div id={'nextArrow'} onClick={onClickHandler} style={{ ...arrowStyles, right: 0 }} >
-              <Grid
-                style={{
-                  height: '100%'
-                }}
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Grid item xs={3}>
-                  <ArrowForwardIosIcon fontSize='large' style={{
-                    zIndex: 999,
-                    opacity: 1,
-                    color: 'white',
-                    fontSize: 50,
-                    fontWeight: 50,
-                  }} />
-                </Grid>
-              </Grid>
-            </div>
-          )
-        }
-        renderIndicator={(onClickHandler, isSelected, index, label) => {
-          if (isSelected) {
-            return (
-              <div style={{ ...indicatorStyles, background: '#fff', listStyleType: 'circle' }}></div>
-            );
-          }
-          return (
-            <div style={{ ...indicatorStyles, background: 'transparent', border: '2px solid white' }}></div>
-          );
-        }}
-        transitionTime={750}
-        showIndicators={true} autoFocus={true} infiniteLoop={true} emulateTouch={true} showThumbs={false} autoPlay={autoPlay} >
+      <div style={{ marginTop: 80 }} />
+
+      <Grid container style={{
+        height: '100%'
+      }}>
         {
-          mainPageBanner.map((item, index) => {
-            return <div key={index}
-              style={{
-                cursor: item.actionLink !== '' ? 'pointer' : 'default'
-              }}
-              onClick={() => {
-                if (item.actionLink !== '') {
-                  router.push(item.actionLink)
-                }
-              }}>
-              {
-                item.bannerDesktop !== '' ?
-                  < Image
-                    alt={item.bannerSEOTitle}
-                    title={item.bannerSEOTitle}
-                    width={isDesktop ? '3648px' : item.bannerMobile === '' ? '3648px' : '2736px'}
-                    height={isDesktop ? '1358px' : item.bannerMobile === '' ? '1358px' : '2736px'}
-                    src={isDesktop ? item.bannerDesktop : (item.bannerMobile !== '' ? item.bannerMobile : item.bannerDesktop)}
-                  /> :
-                  <div style={{
-                    position: 'relative',
-                    paddingTop: isDesktop ? '37.5%' : '100%',
-                  }}>
-                    <ReactPlayer
-                      loop={true}
-                      onPlay={() => {
-                        setAutoPlay(false);
-                      }}
-                      onPause={() => {
-                        setAutoPlay(true);
-                      }}
-                      light={item.thumbumbDesktop !== '' ? (isDesktop ? item.thumbumbDesktop : (item.thumbumbMobile !== '' ? item.thumbumbMobile : item.thumbumbDesktop)) : false}
-                      controls={true}
-                      width={'100%'}
-                      height={'100%'}
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                      }}
-                      url={
-                        `${item.bannerVideo}`
-                      }
-                    />
-                  </div>
-              }
-              <div style={{
-                backgroundColor: 'black',
-                color: 'white',
-                fontSize: 20
-              }}>
-                {item.bannerTitle}
-              </div>
-            </div>
+          projects?.map(project => {
+            return <Grid item xs={12} md={6}>
+              <ProjectCard
+                backgroundImage={project.image}
+                type={project.type}
+                projectName={project.address}
+              />
+            </Grid>
           })
         }
-      </Carousel >
 
-      <div style={{ margin: 10 }}>
-        <Grid container spacing={3}>
-          {
-            highlight.map((item, index) => {
-              return (
-                <Grid key={index} item xs={12} sm={6} md={4}>
-                  <ActionAreaCard
-                    img={isDesktop ? item.bannerDesktop : (item.bannerMobile !== '' ? item.bannerDesktop : item.bannerMobile)}
-                    title={item.bannerTitle}
-                    href={item.actionLink}
-                  />
-                </Grid>
-              )
-            })
-          }
-        </Grid>
-      </div>
+      </Grid>
 
-      <Footer latestNews={latestNews} />
+      <Footer
+        address={footer.address}
+        officeHour={footer.officeHour}
+        phone={footer.phone}
+        whatsapp={footer.whatsapp}
+        whatsappWelcomeMessage={footer.whatsappWelcomeMessage}
+        email={footer.email}
+        googleMapLink={footer.googleMapLink} />
+
+      <Copyright />
 
     </div >
   )
@@ -266,32 +120,24 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     `../locales/${locale}.json`
   );
 
+  const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
+
+  const { seoSetting, carousel, portfolio, footer } = homePage?.[0]?.fields;
+
+  const projects: ProjectCardProps[] = [];
+
+  portfolio?.map(item => {
+    projects.push(transformProjectCard(item))
+  });
+
+  console.log(translateFooter(footer));
   try {
-
-    const homePage = await contentfulService.getEntriesByContentType('homePage');
-
-    const mainPageBanner = [];
-    const highlight = [];
-
-    homePage.map(item => {
-      item.fields.mainPageBanner.map(banner => {
-        mainPageBanner.push(transformBannerData(banner))
-      })
-
-      item.fields.highlight.map(banner => {
-        highlight.push(transformBannerData(banner))
-      })
-    })
-
-    const blogEntries = await contentfulService.getBlogEntries(BlogTypeEnum.SEO, 2, 0);
-
     return {
       props: {
         lngDict,
-        mainPageBanner,
-        highlight,
-        webSettings: transformWebSettings(homePage[0]),
-        latestNews: blogEntries.map(blog => transformBlog(blog))
+        webSettings: transformWebSettings(seoSetting),
+        projects: projects,
+        footer: translateFooter(footer)
       },
       revalidate: 1,
     };

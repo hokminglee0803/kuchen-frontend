@@ -5,18 +5,27 @@ import { useI18n } from 'next-localization';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import BlogCard from '../../components/BlogCard';
-import Copyright from '../../components/Copyright';
-import ResponsiveAppBar from '../../components/ResponsiveAppBar';
+import Copyright from '../components/Copyright';
+import Footer from '../components/Footer';
+import ProjectCard from '../components/ProjectCard';
+import ResponsiveAppBar from '../components/ResponsiveAppBar';
+import { FooterProps } from '../interface/Footer';
+import { PageSettingProps } from '../interface/PageSetting';
+import { ProjectCardProps } from '../interface/ProjectCard';
+import contentfulService from '../utils/service/contentfulService';
+import { transformWebSettings, transformProjectCard, translateFooter } from '../utils/transformer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ReactPlayer from 'react-player/lazy'
+
 
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
-interface BlogProps {
+interface InstallationProps {
     // webSettings: PageSettingProps;
     // projects: ProjectCardProps[];
     // footer: FooterProps;
 }
 
-const Blog: React.FC<BlogProps> = ({ }) => {
+const Installation: React.FC<InstallationProps> = ({ }) => {
 
     const router = useRouter();
 
@@ -31,8 +40,6 @@ const Blog: React.FC<BlogProps> = ({ }) => {
     const theme = useTheme();
 
     const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
-
-    const [bloglist, setBloglist] = useState([]);
 
     useEffect(() => {
         if (init) {
@@ -77,22 +84,40 @@ const Blog: React.FC<BlogProps> = ({ }) => {
 
             <ResponsiveAppBar />
 
-            <div style={{ marginTop: 80 }} />
+            <div style={{ marginTop: 120 }} />
 
             <Box style={{
-                height: 400,
+                height: 250,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 fontSize: 25,
-                background: 'url(https://www.kuchen.com.hk/wp-content/uploads/2021/04/pexels-tatiana-syrikova-3968175-scaled.jpg)'
             }}>
                 <h1>
-                    {t('blog')}
+                    {t('installation')}
                 </h1>
             </Box>
 
-            <BlogCard />
+            <Grid container style={{ width: '75%', margin: "auto" }}>
+                <Grid item xs={12} md={6}>
+                    <div className='player-wrapper'>
+                        <ReactPlayer
+                            className='react-player'
+                            width={'100%'}
+                            height={'100%'}
+                            url={`https://www.youtube.com/watch?v=ZXQt1ITou4E&ab_channel=OppeinHomeOfficial`} />
+                    </div>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <div className='player-wrapper'>
+                        <ReactPlayer
+                            className='react-player'
+                            width={'100%'}
+                            height={'100%'}
+                            url={`https://www.youtube.com/watch?v=ZXQt1ITou4E&ab_channel=OppeinHomeOfficial`} />
+                    </div>
+                </Grid>
+            </Grid>
 
             {/* <Footer
                 address={footer.address}
@@ -113,7 +138,7 @@ const Blog: React.FC<BlogProps> = ({ }) => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
     const { default: lngDict = {} } = await import(
-        `../../locales/${locale}.json`
+        `../locales/${locale}.json`
     );
 
     // const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
@@ -137,10 +162,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
             revalidate: 1,
         };
     } catch (e) {
-        console.log(`[Blog Page] getStaticProps failed.`);
+        console.log(`[Installation Page] getStaticProps failed.`);
 
         throw e;
     }
 };
 
-export default Blog;
+export default Installation;

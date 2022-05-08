@@ -1,5 +1,5 @@
 {
-  "name": "ngo-activities",
+  "name": "kuchen",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -19,6 +19,9 @@
     "@contentful/rich-text-types": "^15.12.1",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@iconify/react": "^3.2.1",
     "@mui/icons-material": "^5.5.1",
     "@mui/lab": "^5.0.0-alpha.73",
@@ -37,12 +40,13 @@
     "next-sitemap": "^2.5.20",
     "postbuild": "^2.1.0",
     "react": "17.0.2",
+    "react-animated-cursor": "^2.4.0",
     "react-cookie": "^4.1.1",
     "react-dom": "17.0.2",
     "react-images": "^1.2.0-beta.7",
     "react-infinite-scroll-component": "^6.1.0",
     "react-photo-gallery": "^8.0.0",
-    "react-player": "^2.10.0",
+    "react-player": "^2.10.1",
     "react-responsive-carousel": "^3.2.23",
     "react-share-social": "^0.1.48",
     "react-swipeable-views": "^0.14.0",
@@ -52,6 +56,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.22",
+    "@types/react": "17.0.1",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",
     "typescript": "^4.6.2"

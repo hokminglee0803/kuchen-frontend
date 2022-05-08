@@ -4,6 +4,5 @@ export interface PageSettingProps {
     seoKeywords: string;
     openGraphTitle: string;
     openGraphDescription: string;
-    openGraphUrl: string;
     openGraphImage: string;
 }

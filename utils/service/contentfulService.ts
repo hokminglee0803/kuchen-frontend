@@ -1,4 +1,5 @@
 import contentfulClient from "../contentfulClient";
+import { translateLocale } from "../transformer";
 
 const client = contentfulClient.initContentful();
 
@@ -30,12 +31,13 @@ const getBlogEntries = async (blogType: string, limit: number, skip: number) => 
         })
 }
 
-const getEntriesById = async (id?: string) => {
+const getEntriesById = async (id: string, locale: string) => {
     let query = {};
     if (id !== undefined) {
         query = {
             ...query,
             'sys.id': id,
+            'locale': translateLocale(locale)
         }
     }
     return await client.getEntries(query)

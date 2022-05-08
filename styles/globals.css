@@ -4,8 +4,7 @@ body {
   --inv: #000000;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 a {
@@ -58,4 +57,92 @@ a {
 .carousel .control-next.control-arrow:before .nav-btn {
   border-left: 8px solid #fff;
   width: 100px;
+}
+
+::selection {
+  color: orange
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.un {
+  display: inline-block;
+}
+
+.un::after {
+  content: '';
+  width: 0px;
+  height: 1px;
+  display: block;
+  background: orange;
+  transition: 300ms;
+}
+
+.un:hover::after {
+  width: 100%;
+}
+
+.card .shaddow {
+  position: absolute;
+  background: black;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  opacity: 0.1;
+  clip-path: polygon(50% 0, 50% 100%, 0% 100%, 0 0);
+  transition: clip-path 0.7s;
+}
+
+.card .title {
+  position: absolute;
+  color: white;
+  width: 50%;
+  height: 100%;
+  z-index: 999;
+  left: 10%;
+  top: 40%;
+  transition: color 0.5s;
+}
+
+.card .title .underline {
+  display: inline-block;
+}
+
+.card .title .underline::after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  display: block;
+  background: white;
+  transition: background 0.5s;
+}
+
+.card:hover .shaddow {
+  background: rgb(149 232 222);
+  opacity: 0.8;
+  clip-path: polygon(55% 0, 45% 100%, 0% 100%, 0 0);
+  position: absolute;
+}
+
+.card:hover .title {
+  color: black
+}
+
+.card:hover .title .underline::after {
+  background: black;
+}
+
+.player-wrapper {
+  margin: 2%;
+  position: relative;
+  padding-top: 56.25%
+    /* Player ratio: 100 / (1280 / 720) */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

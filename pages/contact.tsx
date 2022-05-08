@@ -1,22 +1,30 @@
-import { Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/system/Box';
 import { GetStaticProps } from 'next';
 import { useI18n } from 'next-localization';
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import BlogCard from '../../components/BlogCard';
-import Copyright from '../../components/Copyright';
-import ResponsiveAppBar from '../../components/ResponsiveAppBar';
+import Copyright from '../components/Copyright';
+import Footer from '../components/Footer';
+import ProjectCard from '../components/ProjectCard';
+import ResponsiveAppBar from '../components/ResponsiveAppBar';
+import { FooterProps } from '../interface/Footer';
+import { PageSettingProps } from '../interface/PageSetting';
+import { ProjectCardProps } from '../interface/ProjectCard';
+import contentfulService from '../utils/service/contentfulService';
+import { transformWebSettings, transformProjectCard, translateFooter } from '../utils/transformer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
-interface BlogProps {
+interface ContactProps {
     // webSettings: PageSettingProps;
     // projects: ProjectCardProps[];
     // footer: FooterProps;
 }
 
-const Blog: React.FC<BlogProps> = ({ }) => {
+const Contact: React.FC<ContactProps> = ({ }) => {
 
     const router = useRouter();
 
@@ -31,8 +39,6 @@ const Blog: React.FC<BlogProps> = ({ }) => {
     const theme = useTheme();
 
     const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
-
-    const [bloglist, setBloglist] = useState([]);
 
     useEffect(() => {
         if (init) {
@@ -88,11 +94,42 @@ const Blog: React.FC<BlogProps> = ({ }) => {
                 background: 'url(https://www.kuchen.com.hk/wp-content/uploads/2021/04/pexels-tatiana-syrikova-3968175-scaled.jpg)'
             }}>
                 <h1>
-                    {t('blog')}
+                    {t('contact_us')}
                 </h1>
             </Box>
 
-            <BlogCard />
+
+            <Grid container sx={{
+                background: 'orange',
+                color: 'white',
+                paddingLeft: '2%',
+                alignItems: 'center',
+                paddingTop: '2%',
+                paddingBottom: '2%',
+            }}>
+                <Grid item xs={12} md={10}>
+                    <Typography style={{
+                        fontSize: 35,
+                    }}>
+                        <b>
+                            ARE YOU LOOKING FOR A CONSULTATION ?
+                        </b>
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                    <Button
+                        sx={{
+                            background: 'grey',
+                            color: 'white',
+                            padding: '5%',
+                            paddingLeft: '10%',
+                            paddingRight: '10%',
+                        }}>
+                        $300/Session
+                    </Button>
+                </Grid>
+            </Grid>
+
 
             {/* <Footer
                 address={footer.address}
@@ -113,7 +150,7 @@ const Blog: React.FC<BlogProps> = ({ }) => {
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
     const { default: lngDict = {} } = await import(
-        `../../locales/${locale}.json`
+        `../locales/${locale}.json`
     );
 
     // const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
@@ -137,10 +174,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
             revalidate: 1,
         };
     } catch (e) {
-        console.log(`[Blog Page] getStaticProps failed.`);
+        console.log(`[Contact Page] getStaticProps failed.`);
 
         throw e;
     }
 };
 
-export default Blog;
+export default Contact;

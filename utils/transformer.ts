@@ -9,6 +9,54 @@ export const options = {
     }
 }
 
+// Constant 
+export const transformWebSettings = (item: any) => {
+    return {
+        seoTitle: item?.fields?.title ?? '',
+        seoDescription: item.fields?.description ?? '',
+        seoKeywords: item.fields?.keywords?.toString() ?? '',
+        openGraphTitle: item?.fields?.openGraphTitle ?? '',
+        openGraphDescription: item?.fields?.openGraphDescription ?? '',
+        openGraphImage: item?.fields?.openGraphImage?.fields?.file?.url ?? '',
+    }
+}
+
+export const translateLocale = (locale: string) => {
+    switch (locale) {
+        case 'zh':
+            return 'zh-Hant-HK';
+        case 'en':
+            return 'en-US';
+        default:
+            return 'zh-Hant-HK';
+    }
+}
+
+export const translateFooter = (item: any) => {
+    return {
+        address: item?.fields?.address ?? '',
+        officeHour: item.fields?.officeHour ?? [],
+        phone: item.fields?.phone ?? '',
+        whatsapp: item?.fields?.whatsapp ?? '',
+        whatsappWelcomeMessage: '',
+        email: item?.fields?.email ?? '',
+        googleMapLink: item?.fields?.googleMap ?? '',
+    }
+}
+
+
+//Customized
+
+export const transformProjectCard = (item: any) => {
+    return {
+        type: item?.fields?.type ?? '',
+        address: item?.fields?.address ?? '',
+        image: item?.fields?.image?.fields?.file?.url ? `https:${item?.fields?.image?.fields?.file?.url}` : '',
+    }
+}
+
+
+// Will be depreciated
 export const transformBannerData = (banner: any) => {
     return {
         bannerTitle: banner?.fields?.bannerTitle ?? '',
@@ -74,17 +122,7 @@ export const transformVideoClip = (clip: any) => {
     }
 }
 
-export const transformWebSettings = (item: any) => {
-    return {
-        seoTitle: item?.fields?.seoTitle ?? '',
-        seoDescription: item.fields?.seoDescription ?? '',
-        seoKeywords: item.fields?.seoKeywords?.toString() ?? '',
-        openGraphTitle: item?.fields?.openGraphTitle ?? '',
-        openGraphDescription: item?.fields?.openGraphDescription ?? '',
-        openGraphUrl: item.fields?.openGraphUrl ?? '',
-        openGraphImage: item?.fields?.openGraphImage?.fields?.file?.url ?? '',
-    }
-}
+
 
 export const transformKnowMore = (item: any) => {
 

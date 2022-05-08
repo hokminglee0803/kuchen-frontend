@@ -5,8 +5,8 @@ let contentfulClient: ContentfulClientApi;
 
 const createContentfulClient = () => {
     return createClient({
-        space: 'k5r307sl52db',
-        accessToken: '1VEz-qwR2n7VYf-gJKbUG5gf7lkzLeFMplXtrb0vZQY',
+        space: '1hz59jvvggjc',
+        accessToken: 'gz-9DFRjRhIkcVQb1n0bcaRpOUGSQXDogkvloNPeh1s',
     });
 }
 
