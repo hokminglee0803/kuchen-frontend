@@ -41,8 +41,6 @@ export default function ProjectMotionCard({ id, backgroundImage, type, projectNa
           }} >
             <img src={backgroundImage}
               alt="kuchen"
-              layout="fill"
-              objectFit="cover"
             />
             <div
               className='title'
