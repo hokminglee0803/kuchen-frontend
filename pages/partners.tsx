@@ -137,7 +137,7 @@ const Partners: React.FC<PartnersProps> = ({ title, webSettings, description, al
                                         margin: 'auto'
                                     }}
                                 >
-                                    <img
+                                    <Image
                                         alt={item.alt}
                                         src={item.url}
                                         width={item.width}
