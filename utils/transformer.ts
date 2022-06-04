@@ -70,7 +70,7 @@ export const translateFooter = (item: any) => {
 export const transformImage = (item: any) => {
     return {
         alt: item?.fields?.title ?? '',
-        url: item?.fields?.file?.url ? `https://res.cloudinary.com/demo/image/fetch/https:${item?.fields?.file?.url} ` : '',
+        url: item?.fields?.file?.url ? `https:${item?.fields?.file?.url} ` : '',
         width: item?.fields?.file?.details?.image?.width * 5 ?? 1,
         height: item?.fields?.file?.details?.image?.height * 5 ?? 1,
     }

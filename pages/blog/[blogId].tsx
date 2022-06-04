@@ -157,7 +157,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                     <span className="reveal-overlay"
                     />
                     <Image
-                        src={coverImage.url}
+                        src={`https://res.cloudinary.com/demo/image/fetch/${coverImage.url}}
                         alt={coverImage.alt}
                         height={coverImage.height}
                         width={coverImage.width}
@@ -188,7 +188,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                     cursor: 'pointer',
                 }}
                     onClick={() => {
-                        window.open(`${localePath}/blog/${prevId}`, '_self')
+                        window.open(`${localePath} /blog/${prevId}`, '_self')
                     }}
                 >
                     <div style={{
@@ -210,7 +210,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                             backgroundColor: 'orange',
                         }} />
                     </div>
-                </Grid> : ''
+            </Grid> : ''
             }
 
             <div style={{
