@@ -2,7 +2,7 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
   images: {
-    domains: ['images.ctfassets.net', 'www.kuchen.com.hk'],
+    domains: ['images.ctfassets.net', 'www.kuchen.com.hk', 'kuchen.vercel.app'],
   },
   i18n: {
     locales: ['zh', 'en'],
