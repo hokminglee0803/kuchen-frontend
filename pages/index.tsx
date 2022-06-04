@@ -1,4 +1,4 @@
-import { Grid, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Grid, Slide, Typography, useMediaQuery, useTheme, Zoom } from '@mui/material';
 import { GetStaticProps } from 'next';
 import { useI18n } from 'next-localization';
 import Head from 'next/head'
@@ -12,15 +12,20 @@ import { FooterProps } from '../interface/Footer';
 import { PageSettingProps } from '../interface/PageSetting';
 import { ProjectCardProps } from '../interface/ProjectCard';
 import contentfulService from '../utils/service/contentfulService';
-import { transformWebSettings, transformProjectCard, translateFooter } from '../utils/transformer';
+import { transformWebSettings, transformProjectCard, translateFooter, transformCarousel, transformProjectDetailToProjectCard } from '../utils/transformer';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Parallax, Pagination, Navigation } from "swiper";
+import { CarouselProps } from '../interface/Carousel';
+
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
 interface IndexPageProps {
   webSettings: PageSettingProps;
   projects: ProjectCardProps[];
   footer: FooterProps;
+  carousel: CarouselProps[];
 }
 
-const IndexPage: React.FC<IndexPageProps> = ({ webSettings, projects, footer }) => {
+const IndexPage: React.FC<IndexPageProps> = ({ webSettings, projects, footer, carousel }) => {
 
   const router = useRouter();
 
@@ -35,6 +40,8 @@ const IndexPage: React.FC<IndexPageProps> = ({ webSettings, projects, footer }) 
   const theme = useTheme();
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     if (init) {
@@ -81,16 +88,98 @@ const IndexPage: React.FC<IndexPageProps> = ({ webSettings, projects, footer }) 
 
       <div style={{ marginTop: 80 }} />
 
+      <Swiper
+        style={{
+          // @ts-ignore
+          "--swiper-pagination-color": "#fff",
+        }}
+        speed={600}
+        parallax={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Parallax, Pagination, Navigation]}
+        navigation={{
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }}
+        className="mySwiper"
+        onSlideChange={() => console.log('slide change')}
+      >
+        <div className='swiper-button-next'></div>
+        <div className='swiper-button-prev'></div>
+        {
+          carousel.map((item, index) => {
+            return <SwiperSlide
+              key={index}
+              style={{
+                background: `url(${item.image.url})`,
+                height: '590px',
+                backgroundSize: '100% auto'
+              }}>
+              {({ isActive }) => (
+                <Slide
+                  style={{
+                    // @ts-ignore
+                    transitionDelay: 350,
+                    height: '100%'
+                  }}
+                  direction="up" in={isActive} timeout={700} mountOnEnter unmountOnExit>
+                  <div className="text" data-swiper-parallax="-100" style={{
+                    marginTop: isDesktop ? '12%' : '38%',
+                    background: 'white',
+                    height: isDesktop ? 225 : 225,
+                    width: 350,
+                    color: 'black',
+                    opacity: 0.8
+                  }}>
+                    <Box style={{
+                      height: '100%',
+                      textAlign: 'center',
+                      fontSize: 20,
+                      margin: 25,
+                    }}>
+                      <br />
+                      <Typography style={{
+                        marginTop: 5,
+                        lineHeight: 1,
+                      }}>
+                        <b style={{
+                          fontWeight: 1000,
+                        }}>
+                          {item.title}
+                        </b>
+                      </Typography>
+                      <Typography style={{
+                        marginTop: 20,
+                        lineHeight: locale === 'en' ? 1 : 1.5,
+                      }}>
+                        <p>
+                          {item.description}
+                        </p>
+                      </Typography>
+                    </Box>
+                  </div>
+                </Slide>
+              )}
+            </SwiperSlide>
+          })
+        }
+      </Swiper>
+
       <Grid container style={{
         height: '100%'
       }}>
         {
-          projects?.map(project => {
-            return <Grid item xs={12} md={6}>
+          projects?.map((project, index) => {
+            return <Grid
+              key={index}
+              item xs={12} md={6}>
               <ProjectCard
-                backgroundImage={project.image}
+                backgroundImage={project.coverImage}
                 type={project.type}
                 projectName={project.address}
+                id={project.id}
               />
             </Grid>
           })
@@ -127,14 +216,14 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const projects: ProjectCardProps[] = [];
 
   portfolio?.map(item => {
-    projects.push(transformProjectCard(item))
+    projects.push(transformProjectDetailToProjectCard(item));
   });
 
-  console.log(translateFooter(footer));
   try {
     return {
       props: {
         lngDict,
+        carousel: carousel.map(item => transformCarousel(item)),
         webSettings: transformWebSettings(seoSetting),
         projects: projects,
         footer: translateFooter(footer)

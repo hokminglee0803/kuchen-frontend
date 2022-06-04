@@ -20,12 +20,12 @@ import ReactPlayer from 'react-player/lazy'
 
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
 interface InstallationProps {
-    // webSettings: PageSettingProps;
-    // projects: ProjectCardProps[];
-    // footer: FooterProps;
+    title: string;
+    webSettings: PageSettingProps;
+    youtubeLink: string[];
 }
 
-const Installation: React.FC<InstallationProps> = ({ }) => {
+const Installation: React.FC<InstallationProps> = ({ title, webSettings, youtubeLink }) => {
 
     const router = useRouter();
 
@@ -47,12 +47,10 @@ const Installation: React.FC<InstallationProps> = ({ }) => {
         }
     }, [init])
 
-
-
     return (
         <div>
             <Head>
-                {/* <title>{webSettings?.seoTitle}</title>
+                <title>{webSettings?.seoTitle}</title>
                 <meta name="description" content={webSettings?.seoDescription} />
                 <meta name="keywords" content={webSettings?.seoKeywords} />
                 <meta name="google-site-verification" content="HSeiJF1wIPEmRWl27NIHwrslEwWKO6YuN0AP2IkOVgk" />
@@ -79,54 +77,62 @@ const Installation: React.FC<InstallationProps> = ({ }) => {
                 <meta property="og:url" content={`${HOME_PATH}${localePath}`} />
                 <meta property="og:site_name" content="kuchen"></meta>
                 <meta property="og:image" content={webSettings?.openGraphImage} />
-                <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
 
             <ResponsiveAppBar />
 
             <div style={{ marginTop: 120 }} />
-
-            <Box style={{
-                height: 250,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                fontSize: 25,
-            }}>
-                <h1>
-                    {t('installation')}
-                </h1>
-            </Box>
-
-            <Grid container style={{ width: '75%', margin: "auto" }}>
-                <Grid item xs={12} md={6}>
-                    <div className='player-wrapper'>
-                        <ReactPlayer
-                            className='react-player'
-                            width={'100%'}
-                            height={'100%'}
-                            url={`https://www.youtube.com/watch?v=ZXQt1ITou4E&ab_channel=OppeinHomeOfficial`} />
-                    </div>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <div className='player-wrapper'>
-                        <ReactPlayer
-                            className='react-player'
-                            width={'100%'}
-                            height={'100%'}
-                            url={`https://www.youtube.com/watch?v=ZXQt1ITou4E&ab_channel=OppeinHomeOfficial`} />
-                    </div>
+            
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+            >
+                <Grid item xs={12} style={{
+                    margin: '5%'
+                }}>
+                    <h1 style={{
+                        width: '100%',
+                        margin: 'auto',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        fontSize: '5vw',
+                        marginTop: '30px',
+                    }}>
+                        {title}
+                    </h1>
+                    <div style={{
+                        width: '20%',
+                        margin: 'auto',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderBottom: '1.5px solid black'
+                    }} />
                 </Grid>
             </Grid>
 
-            {/* <Footer
-                address={footer.address}
-                officeHour={footer.officeHour}
-                phone={footer.phone}
-                whatsapp={footer.whatsapp}
-                whatsappWelcomeMessage={footer.whatsappWelcomeMessage}
-                email={footer.email}
-                googleMapLink={footer.googleMapLink} /> */}
+            <Grid container style={{ width: '75%', margin: "auto" }}>
+                {
+                    youtubeLink.map((item, index) => {
+                        return <Grid key={index} item xs={12} md={6}>
+                            <div className='player-wrapper'>
+                                <ReactPlayer
+                                    className='react-player'
+                                    width={'100%'}
+                                    height={'100%'}
+                                    url={`${item}`} />
+                            </div>
+                        </Grid>
+                    })
+                }
+
+            </Grid>
 
             <Copyright />
 
@@ -141,23 +147,17 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         `../locales/${locale}.json`
     );
 
-    // const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
+    const installationPage = await contentfulService.getEntriesById('6RMnoN95qCPNJQYmoiHnKy', locale);
 
-    // const { seoSetting, carousel, portfolio, footer } = homePage?.[0]?.fields;
-
-    // const projects: ProjectCardProps[] = [];
-
-    // portfolio?.map(item => {
-    //     projects.push(transformProjectCard(item))
-    // });
+    const { seoSetting, name, youtubeLink } = installationPage?.[0]?.fields;
 
     try {
         return {
             props: {
                 lngDict,
-                // webSettings: transformWebSettings(seoSetting),
-                // projects: projects,
-                // footer: translateFooter(footer)
+                webSettings: transformWebSettings(seoSetting),
+                title: name,
+                youtubeLink: youtubeLink,
             },
             revalidate: 1,
         };

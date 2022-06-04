@@ -1,5 +1,4 @@
 import { Box, Grid, Paper, Skeleton, styled, Typography } from '@mui/material';
-import { maxWidth } from '@mui/system';
 import { useI18n } from 'next-localization';
 import * as React from 'react';
 
@@ -32,8 +31,8 @@ export default function Footer({ address, officeHour, phone, whatsapp, whatsappW
                             {t('office_hour')}
                         </Typography>
                         {
-                            officeHour?.map(item => {
-                                return <Typography style={{ margin: 8, fontSize: 15 }}>
+                            officeHour?.map((item, index) => {
+                                return <Typography key={index} style={{ margin: 8, fontSize: 15 }}>
                                     {item}
                                 </Typography>
                             })
@@ -45,6 +44,7 @@ export default function Footer({ address, officeHour, phone, whatsapp, whatsappW
                                     color: "orange",
                                     cursor: 'pointer'
                                 }}
+                                rel="noreferrer"
                                 target="_blank"
                                 href={`https://api.whatsapp.com/send?phone=${whatsapp}&text=${whatsappWelcomeMessage}`}
                             >

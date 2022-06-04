@@ -13,18 +13,20 @@ import { FooterProps } from '../interface/Footer';
 import { PageSettingProps } from '../interface/PageSetting';
 import { ProjectCardProps } from '../interface/ProjectCard';
 import contentfulService from '../utils/service/contentfulService';
-import { transformWebSettings, transformProjectCard, translateFooter } from '../utils/transformer';
+import { transformWebSettings, transformProjectCard, translateFooter, transformImage } from '../utils/transformer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { ImageProps } from '../interface/Image';
+import Image from 'next/image'
 
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
 interface ContactProps {
-    // webSettings: PageSettingProps;
-    // projects: ProjectCardProps[];
-    // footer: FooterProps;
+    title: string;
+    webSettings: PageSettingProps;
+    coverImage: ImageProps
+    footer: FooterProps;
 }
 
-const Contact: React.FC<ContactProps> = ({ }) => {
+const Contact: React.FC<ContactProps> = ({ title, webSettings, coverImage, footer }) => {
 
     const router = useRouter();
 
@@ -51,7 +53,7 @@ const Contact: React.FC<ContactProps> = ({ }) => {
     return (
         <div>
             <Head>
-                {/* <title>{webSettings?.seoTitle}</title>
+                <title>{webSettings?.seoTitle}</title>
                 <meta name="description" content={webSettings?.seoDescription} />
                 <meta name="keywords" content={webSettings?.seoKeywords} />
                 <meta name="google-site-verification" content="HSeiJF1wIPEmRWl27NIHwrslEwWKO6YuN0AP2IkOVgk" />
@@ -78,7 +80,7 @@ const Contact: React.FC<ContactProps> = ({ }) => {
                 <meta property="og:url" content={`${HOME_PATH}${localePath}`} />
                 <meta property="og:site_name" content="kuchen"></meta>
                 <meta property="og:image" content={webSettings?.openGraphImage} />
-                <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
 
             <ResponsiveAppBar />
@@ -90,13 +92,100 @@ const Contact: React.FC<ContactProps> = ({ }) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                fontSize: 25,
-                background: 'url(https://www.kuchen.com.hk/wp-content/uploads/2021/04/pexels-tatiana-syrikova-3968175-scaled.jpg)'
+                fontSize: 20,
+                background: 'url(https://images.ctfassets.net/1hz59jvvggjc/7LRZsfEVcYVM7lrwZyDS75/27b73c0889187f837b4971f4c0e72839/Background.jpeg)'
             }}>
                 <h1>
-                    {t('contact_us')}
+                    {title}
                 </h1>
             </Box>
+
+
+            <Grid container sx={{
+                alignItems: 'center',
+            }}>
+                <Grid item xs={12} sm={6}>
+                    <Grid container style={{
+                        display: 'flex',
+                        margin: 'auto',
+                        width: '80%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                    >
+                        <Grid item xs={12}>
+                            <Box>
+                                <Typography style={{ margin: 20, fontSize: 20 }}>
+                                    {t('address')}
+                                </Typography>
+                                <Typography style={{ margin: 20, fontSize: 20 }}>
+                                    {footer.address}
+                                </Typography>
+                                <Typography style={{ margin: 20, fontSize: 20 }}>
+                                    {t('office_hour')}
+                                </Typography>
+                                {
+                                    footer.officeHour?.map((item, index) => {
+                                        return <Typography key={index} style={{ margin: 20, fontSize: 20 }}>
+                                            {item}
+                                        </Typography>
+                                    })
+                                }
+                                <Typography style={{ margin: 20, fontSize: 20 }}>
+                                    {t('whatsapp')}
+                                    <a
+                                        style={{
+                                            color: "orange",
+                                            cursor: 'pointer'
+                                        }}
+                                        rel="noreferrer"
+                                        target="_blank"
+                                        href={`https://api.whatsapp.com/send?phone=${footer.whatsapp}&text=${footer.whatsappWelcomeMessage}`}
+                                    >
+                                        {footer.whatsapp}
+                                    </a>
+                                </Typography>
+                                <Typography style={{ margin: 20, fontSize: 20 }}>
+                                    {t('phone')}
+                                    <a
+                                        style={{
+                                            color: "orange",
+                                            cursor: 'pointer'
+                                        }}
+                                        href={`tel:${footer.phone}`}>
+                                        {footer.phone}
+                                    </a>
+                                </Typography>
+                                <Typography style={{ margin: 20, fontSize: 20 }}>
+                                    {t('email')}
+                                    <a
+                                        style={{
+                                            color: "orange",
+                                            cursor: 'pointer'
+                                        }}
+                                        href={`mailto:${footer.email}`}>
+                                        {footer.email}
+                                    </a>
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+                <Grid item xs={12} sm={6}
+                    style={{
+                        width: '85%',
+                        margin: 'auto'
+                    }}
+                >
+                    <Image
+                        alt={coverImage.alt}
+                        src={coverImage.url}
+                        width={coverImage.width}
+                        height={coverImage.height} />
+                </Grid>
+            </Grid>
+
 
 
             <Grid container sx={{
@@ -118,6 +207,9 @@ const Contact: React.FC<ContactProps> = ({ }) => {
                 </Grid>
                 <Grid item xs={12} md={2}>
                     <Button
+                        onClick={() => {
+                            router.push('/checkout')
+                        }}
                         sx={{
                             background: 'grey',
                             color: 'white',
@@ -131,14 +223,14 @@ const Contact: React.FC<ContactProps> = ({ }) => {
             </Grid>
 
 
-            {/* <Footer
+            <Footer
                 address={footer.address}
                 officeHour={footer.officeHour}
                 phone={footer.phone}
                 whatsapp={footer.whatsapp}
                 whatsappWelcomeMessage={footer.whatsappWelcomeMessage}
                 email={footer.email}
-                googleMapLink={footer.googleMapLink} /> */}
+                googleMapLink={footer.googleMapLink} />
 
             <Copyright />
 
@@ -153,23 +245,17 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         `../locales/${locale}.json`
     );
 
-    // const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
+    const contactUsPage = await contentfulService.getEntriesById('4qMWBRIfk54yFIKd9p9pzU', locale);
 
-    // const { seoSetting, carousel, portfolio, footer } = homePage?.[0]?.fields;
-
-    // const projects: ProjectCardProps[] = [];
-
-    // portfolio?.map(item => {
-    //     projects.push(transformProjectCard(item))
-    // });
-
+    const { name, seoSetting, coverImage, footer } = contactUsPage?.[0]?.fields;
     try {
         return {
             props: {
                 lngDict,
-                // webSettings: transformWebSettings(seoSetting),
-                // projects: projects,
-                // footer: translateFooter(footer)
+                title: name,
+                webSettings: transformWebSettings(seoSetting),
+                coverImage: transformImage(coverImage),
+                footer: translateFooter(footer)
             },
             revalidate: 1,
         };

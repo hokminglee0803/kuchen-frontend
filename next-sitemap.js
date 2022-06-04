@@ -1,4 +1,4 @@
 module.exports = {
-    siteUrl: '',
+    siteUrl: 'www.kuchen.com.hk',
     generateRobotsTxt: true,
 }

@@ -3,9 +3,10 @@ import { translateLocale } from "../transformer";
 
 const client = contentfulClient.initContentful();
 
-const getEntriesByContentType = async (contentType: string) => {
+const getEntriesByContentType = async (contentType: string, locale: string) => {
     return await client.getEntries({
         content_type: `${contentType}`,
+        locale: translateLocale(locale),
     })
         .then((entry) => {
             return entry?.items;
@@ -15,19 +16,32 @@ const getEntriesByContentType = async (contentType: string) => {
         })
 }
 
-const getBlogEntries = async (blogType: string, limit: number, skip: number) => {
+const getEntriesPaginationByContentType = async (contentType: string, locale: string, skip?: number, limit?: number, filter?: object) => {
+
+    let query = {
+    };
+    if (skip) {
+        query = {
+            ...query,
+            skip: skip
+        }
+    }
+
+    if (limit) {
+        query = {
+            ...query,
+            limit: limit
+        }
+    }
+
     return await client.getEntries({
-        'fields.blogType': blogType ?? 'SEO',
-        content_type: 'blog',
-        skip: skip,
-        limit: limit,
-        order: '-sys.createdAt'
+        content_type: `${contentType}`,
+        locale: translateLocale(locale),
+        ...filter,
+        ...query
     })
         .then((entry) => {
-            return entry?.items;
-        }).catch((err) => {
-            console.error(err);
-            return [];
+            return entry;
         })
 }
 
@@ -51,6 +65,6 @@ const getEntriesById = async (id: string, locale: string) => {
 
 export default {
     getEntriesByContentType,
-    getBlogEntries,
+    getEntriesPaginationByContentType,
     getEntriesById
 }

@@ -6,25 +6,23 @@ import Head from 'next/head'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Copyright from '../components/Copyright';
-import Footer from '../components/Footer';
-import ProjectCard from '../components/ProjectCard';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
-import { FooterProps } from '../interface/Footer';
-import { PageSettingProps } from '../interface/PageSetting';
-import { ProjectCardProps } from '../interface/ProjectCard';
 import contentfulService from '../utils/service/contentfulService';
-import { transformWebSettings, transformProjectCard, translateFooter } from '../utils/transformer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { transformWebSettings, transformRichText, transformImage } from '../utils/transformer';
 import Image from 'next/image'
+import { PageSettingProps } from '../interface/PageSetting';
+import { ImageProps } from '../interface/Image';
 
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
 interface PartnersProps {
-    // webSettings: PageSettingProps;
-    // projects: ProjectCardProps[];
-    // footer: FooterProps;
+    title: string;
+    webSettings: PageSettingProps;
+    description: string;
+    album: ImageProps[];
+
 }
 
-const Partners: React.FC<PartnersProps> = ({ }) => {
+const Partners: React.FC<PartnersProps> = ({ title, webSettings, description, album }) => {
 
     const router = useRouter();
 
@@ -51,7 +49,7 @@ const Partners: React.FC<PartnersProps> = ({ }) => {
     return (
         <div>
             <Head>
-                {/* <title>{webSettings?.seoTitle}</title>
+                <title>{webSettings?.seoTitle}</title>
                 <meta name="description" content={webSettings?.seoDescription} />
                 <meta name="keywords" content={webSettings?.seoKeywords} />
                 <meta name="google-site-verification" content="HSeiJF1wIPEmRWl27NIHwrslEwWKO6YuN0AP2IkOVgk" />
@@ -78,7 +76,7 @@ const Partners: React.FC<PartnersProps> = ({ }) => {
                 <meta property="og:url" content={`${HOME_PATH}${localePath}`} />
                 <meta property="og:site_name" content="kuchen"></meta>
                 <meta property="og:image" content={webSettings?.openGraphImage} />
-                <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
 
             <ResponsiveAppBar />
@@ -91,10 +89,10 @@ const Partners: React.FC<PartnersProps> = ({ }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 fontSize: 25,
-                background: 'url(https://www.kuchen.com.hk/wp-content/uploads/2021/04/pexels-tatiana-syrikova-3968175-scaled.jpg)'
+                background: 'url(https://images.ctfassets.net/1hz59jvvggjc/7LRZsfEVcYVM7lrwZyDS75/27b73c0889187f837b4971f4c0e72839/Background.jpeg)'
             }}>
                 <h1>
-                    {t('partners')}
+                    {title}
                 </h1>
             </Box>
 
@@ -112,7 +110,8 @@ const Partners: React.FC<PartnersProps> = ({ }) => {
                 <Typography style={{
                     lineHeight: 2,
                 }}>
-                    我們與Miele、Corian、FISHER & PAYKEL、SMEG等30+國際領先家電品牌合作，是香港授權經銷商之一，確保您的廚房不僅大方高雅，並且配置創新科技電器，為您創造奢華、安全的烹飪和用餐體驗。
+                    <div
+                        dangerouslySetInnerHTML={{ __html: description }} />
                 </Typography>
             </Box>
 
@@ -124,103 +123,31 @@ const Partners: React.FC<PartnersProps> = ({ }) => {
                     margin: 'auto',
                     width: '98%'
                 }}>
-                    <Grid item xs={12} md={2}>
-                        <Box style={{
-                            margin: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                        }}>
-                            <Image
-                                alt='kuchen'
-                                src={'https://www.kuchen.com.hk/wp-content/uploads/2021/04/blanco-.png'}
-                                width={410}
-                                height={123} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                        <Box style={{
-                            margin: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                        }}>
-                            <Image
-                                alt='kuchen'
-                                src={'https://www.kuchen.com.hk/wp-content/uploads/2021/04/blanco-.png'}
-                                width={410}
-                                height={123} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                        <Box style={{
-                            margin: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                        }}>
-                            <Image
-                                alt='kuchen'
-                                src={'https://www.kuchen.com.hk/wp-content/uploads/2021/04/blanco-.png'}
-                                width={410}
-                                height={123} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                        <Box style={{
-                            margin: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                        }}>
-                            <Image
-                                alt='kuchen'
-                                src={'https://www.kuchen.com.hk/wp-content/uploads/2021/04/blanco-.png'}
-                                width={410}
-                                height={123} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                        <Box style={{
-                            margin: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                        }}>
-                            <Image
-                                alt='kuchen'
-                                src={'https://www.kuchen.com.hk/wp-content/uploads/2021/04/blanco-.png'}
-                                width={410}
-                                height={123} />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={2}>
-                        <Box style={{
-                            margin: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                        }}>
-                            <Image
-                                alt='kuchen'
-                                src={'https://www.kuchen.com.hk/wp-content/uploads/2021/04/blanco-.png'}
-                                width={410}
-                                height={123} />
-                        </Box>
-                    </Grid>
+
+                    {
+                        album.map((item, index) => {
+                            return <Grid key={index} item xs={12} md={2}>
+                                <Box style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    textAlign: 'center',
+                                }}
+                                    sx={{
+                                        width: isDesktop ? '90%' : '60%',
+                                        margin: 'auto'
+                                    }}
+                                >
+                                    <Image
+                                        alt={item.alt}
+                                        src={item.url}
+                                        width={item.width}
+                                        height={item.height} />
+                                </Box>
+                            </Grid>
+                        })
+                    }
                 </Grid>
             </Box>
-
-
-
-            {/* <Footer
-                address={footer.address}
-                officeHour={footer.officeHour}
-                phone={footer.phone}
-                whatsapp={footer.whatsapp}
-                whatsappWelcomeMessage={footer.whatsappWelcomeMessage}
-                email={footer.email}
-                googleMapLink={footer.googleMapLink} /> */}
 
             <Copyright />
 
@@ -235,23 +162,18 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         `../locales/${locale}.json`
     );
 
-    // const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
+    const partnerPage = await contentfulService.getEntriesById('bS8yPXupovv7RblINu8kj', locale);
 
-    // const { seoSetting, carousel, portfolio, footer } = homePage?.[0]?.fields;
-
-    // const projects: ProjectCardProps[] = [];
-
-    // portfolio?.map(item => {
-    //     projects.push(transformProjectCard(item))
-    // });
+    const { name, seoSetting, content, album } = partnerPage?.[0]?.fields;
 
     try {
         return {
             props: {
                 lngDict,
-                // webSettings: transformWebSettings(seoSetting),
-                // projects: projects,
-                // footer: translateFooter(footer)
+                webSettings: transformWebSettings(seoSetting),
+                title: name,
+                description: transformRichText(content),
+                album: album.map(item => transformImage(item))
             },
             revalidate: 1,
         };

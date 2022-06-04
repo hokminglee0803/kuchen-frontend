@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: 
+Host: www.kuchen.com.hk
 
 # Sitemaps
-Sitemap: /sitemap.xml
+Sitemap: www.kuchen.com.hk/sitemap.xml

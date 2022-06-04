@@ -1,5 +1,6 @@
-import { Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Grid, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Box from '@mui/system/Box';
+import { ContentfulCollection } from 'contentful';
 import { GetStaticProps } from 'next';
 import { useI18n } from 'next-localization';
 import Head from 'next/head'
@@ -8,15 +9,19 @@ import { useEffect, useState } from 'react';
 import BlogCard from '../../components/BlogCard';
 import Copyright from '../../components/Copyright';
 import ResponsiveAppBar from '../../components/ResponsiveAppBar';
-
+import { BlogProps } from '../../interface/Blog';
+import { PageSettingProps } from '../../interface/PageSetting';
+import contentfulService from '../../utils/service/contentfulService';
+import { transformBlog, transformWebSettings, translateBlogLocale } from '../../utils/transformer';
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
-interface BlogProps {
-    // webSettings: PageSettingProps;
-    // projects: ProjectCardProps[];
-    // footer: FooterProps;
+interface BlogsProps {
+    title: string;
+    webSettings: PageSettingProps;
+    blogs: BlogProps[];
+    total: number;
 }
 
-const Blog: React.FC<BlogProps> = ({ }) => {
+const Blog: React.FC<BlogsProps> = ({ title, webSettings, blogs, total }) => {
 
     const router = useRouter();
 
@@ -32,7 +37,9 @@ const Blog: React.FC<BlogProps> = ({ }) => {
 
     const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
-    const [bloglist, setBloglist] = useState([]);
+    const [bloglist, setBloglist] = useState(blogs);
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (init) {
@@ -40,12 +47,28 @@ const Blog: React.FC<BlogProps> = ({ }) => {
         }
     }, [init])
 
+    useEffect(() => {
+        updateBlogList(1)
+    }, [locale])
+
+
+    const blogListOnChange = async (event: React.ChangeEvent<unknown>, page: number) => {
+        await updateBlogList(page);
+    }
+
+    const updateBlogList = async (page: number) => {
+        setLoading(true)
+        const index = (page - 1) * 4;
+        const blogs: ContentfulCollection<any> = await contentfulService.getEntriesPaginationByContentType('blog', locale, index, index + 4, { 'fields.locale': translateBlogLocale(locale) });
+        setBloglist(blogs.items.map(item => transformBlog(item)));
+        setLoading(false);
+    }
 
 
     return (
         <div>
             <Head>
-                {/* <title>{webSettings?.seoTitle}</title>
+                <title>{webSettings?.seoTitle}</title>
                 <meta name="description" content={webSettings?.seoDescription} />
                 <meta name="keywords" content={webSettings?.seoKeywords} />
                 <meta name="google-site-verification" content="HSeiJF1wIPEmRWl27NIHwrslEwWKO6YuN0AP2IkOVgk" />
@@ -72,7 +95,7 @@ const Blog: React.FC<BlogProps> = ({ }) => {
                 <meta property="og:url" content={`${HOME_PATH}${localePath}`} />
                 <meta property="og:site_name" content="kuchen"></meta>
                 <meta property="og:image" content={webSettings?.openGraphImage} />
-                <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
 
             <ResponsiveAppBar />
@@ -85,26 +108,44 @@ const Blog: React.FC<BlogProps> = ({ }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 fontSize: 25,
-                background: 'url(https://www.kuchen.com.hk/wp-content/uploads/2021/04/pexels-tatiana-syrikova-3968175-scaled.jpg)'
+                background: 'url(https://images.ctfassets.net/1hz59jvvggjc/7LRZsfEVcYVM7lrwZyDS75/27b73c0889187f837b4971f4c0e72839/Background.jpeg)'
             }}>
                 <h1>
-                    {t('blog')}
+                    {title}
                 </h1>
             </Box>
 
-            <BlogCard />
+            {
+                loading ? '' :
+                    bloglist.map((blog, index) => {
+                        return <BlogCard
+                            key={index}
+                            id={blog.id}
+                            image={blog.coverImage.url}
+                            title={blog.title}
+                            createdAt={blog.createdDate}
+                            description={blog.description} />
+                    })
+            }
 
-            {/* <Footer
-                address={footer.address}
-                officeHour={footer.officeHour}
-                phone={footer.phone}
-                whatsapp={footer.whatsapp}
-                whatsappWelcomeMessage={footer.whatsappWelcomeMessage}
-                email={footer.email}
-                googleMapLink={footer.googleMapLink} /> */}
-
+            <Box style={{
+                display: 'flex',
+                margin: 'auto',
+                width: '85%',
+                marginTop: '5%',
+                marginBottom: '5%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+                fontSize: 25,
+            }}>
+                <Pagination
+                    count={Math.ceil(total / 4)}
+                    onChange={blogListOnChange}
+                    variant="outlined"
+                    color="primary" />
+            </Box>
             <Copyright />
-
         </div >
     )
 
@@ -116,23 +157,20 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         `../../locales/${locale}.json`
     );
 
-    // const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
+    const blogMainPage = await contentfulService.getEntriesById('7KW9uhasWyh26hKroiSwaA', locale);
 
-    // const { seoSetting, carousel, portfolio, footer } = homePage?.[0]?.fields;
+    const blogs: ContentfulCollection<any> = await contentfulService.getEntriesPaginationByContentType('blog', locale, 0, 4, { 'fields.locale': translateBlogLocale(locale) });
 
-    // const projects: ProjectCardProps[] = [];
-
-    // portfolio?.map(item => {
-    //     projects.push(transformProjectCard(item))
-    // });
+    const { seoSetting, name } = blogMainPage?.[0]?.fields;
 
     try {
         return {
             props: {
                 lngDict,
-                // webSettings: transformWebSettings(seoSetting),
-                // projects: projects,
-                // footer: translateFooter(footer)
+                webSettings: transformWebSettings(seoSetting),
+                title: name,
+                blogs: blogs.items.map(item => transformBlog(item)),
+                total: blogs.total,
             },
             revalidate: 1,
         };

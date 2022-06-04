@@ -1,11 +1,23 @@
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import { richTextFromMarkdown } from '@contentful/rich-text-from-markdown';
 import { BLOCKS } from '@contentful/rich-text-types';
 
 import moment from 'moment';
 
 export const options = {
     renderNode: {
-        [BLOCKS.PARAGRAPH]: (node, next) => next(node.content).replace('\n', '<br/>')
+        [BLOCKS.PARAGRAPH]: (node, next) => next(node.content).replace('\n', '<br/>'),
+        [BLOCKS.EMBEDDED_ASSET]: (node, next) => {
+            return `
+                <br/>
+                <img
+                    src='https://${node.data.target.fields.file.url}'
+                    alt='${node.data.target.fields.title}'
+                    height='100%'
+                    width='100%'
+                />
+                <br/> `
+        }
     }
 }
 
@@ -32,6 +44,17 @@ export const translateLocale = (locale: string) => {
     }
 }
 
+export const translateBlogLocale = (locale: string) => {
+    switch (locale) {
+        case 'zh':
+            return '中';
+        case 'en':
+            return '英';
+        default:
+            return '中';
+    }
+}
+
 export const translateFooter = (item: any) => {
     return {
         address: item?.fields?.address ?? '',
@@ -44,105 +67,62 @@ export const translateFooter = (item: any) => {
     }
 }
 
+export const transformImage = (item: any) => {
+    return {
+        alt: item?.fields?.title ?? '',
+        url: item?.fields?.file?.url ? `https:${item?.fields?.file?.url} ` : '',
+        width: item?.fields?.file?.details?.image?.width * 5 ?? 1,
+        height: item?.fields?.file?.details?.image?.height * 5 ?? 1,
+    }
+}
+
+export const transformRichText = (item: any) => {
+    return documentToHtmlString(item, options) ?? '';
+}
+
+export const transformMarkdown = async (item: any) => {
+    return await richTextFromMarkdown(item) ?? '';
+}
+
 
 //Customized
+
+export const transformProjectDetailToProjectCard = (item: any) => {
+    return {
+        type: item?.fields?.type ?? '',
+        address: item?.fields?.address ?? '',
+        name: item?.fields?.name ?? '',
+        coverImage: {
+            alt: item?.fields?.coverImage?.fields?.title ?? '',
+            url: item?.fields?.coverImage?.fields?.file?.url ? `https:${item?.fields?.coverImage?.fields?.file?.url} ` : '',
+        },
+        id: item?.sys?.id ?? ''
+    }
+}
 
 export const transformProjectCard = (item: any) => {
     return {
         type: item?.fields?.type ?? '',
         address: item?.fields?.address ?? '',
-        image: item?.fields?.image?.fields?.file?.url ? `https:${item?.fields?.image?.fields?.file?.url}` : '',
+        image: item?.fields?.image?.fields?.file?.url ? `https:${item?.fields?.image?.fields?.file?.url} ` : '',
     }
 }
 
-
-// Will be depreciated
-export const transformBannerData = (banner: any) => {
+export const transformCarousel = (item: any) => {
     return {
-        bannerTitle: banner?.fields?.bannerTitle ?? '',
-        bannerDesktop: banner?.fields?.desktopBanner?.fields?.file?.url ? `https:${banner.fields?.desktopBanner?.fields?.file?.url}` : '',
-        bannerMobile: banner?.fields?.mobileBanner?.fields?.file?.url ? `https:${banner.fields?.mobileBanner?.fields?.file?.url}` : '',
-        bannerVideo: banner?.fields?.bannerVideo ?? '',
-        thumbumbDesktop: banner?.fields?.thumbumbDesktop?.fields?.file?.url ? `https:${banner.fields?.thumbumbDesktop?.fields?.file?.url}` : '',
-        thumbumbMobile: banner?.fields?.thumbumbMobile?.fields?.file?.url ? `https:${banner.fields?.thumbumbMobile?.fields?.file?.url}` : '',
-        actionLink: banner.fields?.actionLink ?? '',
-    }
-}
-
-export const transformShowCollection = (item: any) => {
-    return {
-        year: item.fields.Year,
-        collectionList: item.fields.showCollectionList
-    }
-}
-
-export const transformMediaUrl = (item: any) => {
-    return {
-        src: item?.fields?.file?.url ? `https:${item?.fields?.file?.url}` : '',
-        height: 1,
-        width: 1,
-    }
-}
-
-export const transformArticleWithImage = (item: any) => {
-    return {
-        title: item?.fields?.title,
-        content: documentToHtmlString(item?.fields?.content, options),
-        image: item?.fields?.image?.fields?.file?.url ? `https:${item?.fields?.image?.fields?.file?.url}` : '',
+        title: item?.fields?.title ?? '',
+        description: item.fields?.description ?? '',
+        image: transformImage(item.fields?.image)
     }
 }
 
 export const transformBlog = (item: any) => {
     return {
         id: item?.sys?.id ?? '',
-        title: item?.fields?.title ?? '',
+        title: item?.fields?.name ?? '',
         content: documentToHtmlString(item?.fields?.content, options),
         description: documentToHtmlString(item?.fields?.description, options),
-        desktopBanner: item?.fields?.desktopBanner?.fields?.file?.url ? `https:${item?.fields?.desktopBanner?.fields?.file?.url}` : '',
-        mobileBanner: item?.fields?.mobileBanner?.fields?.file?.url ? `https:${item?.fields?.mobileBanner?.fields?.file?.url}` : '',
+        coverImage: transformImage(item?.fields?.coverImage),
         createdDate: moment(item?.sys?.createdAt).format('DD/MM/YYYY')
-    }
-}
-
-export const transformArticle = (item: any, banner?: any[]) => {
-    return {
-        title: item?.fields?.title ?? '',
-        description: documentToHtmlString(item?.fields?.description, options) ?? '',
-        banner: banner ?? (item?.fields?.banner?.map(item => transformBannerData(item)) ?? [])
-    }
-}
-
-export const transformVideoClip = (clip: any) => {
-    return {
-        title: clip?.fields?.title ?? '',
-        url: clip.fields?.url ?? '',
-        description: documentToHtmlString(clip.fields?.description, options) ?? '',
-        thumbumbDesktop: clip?.fields?.thumbumbDesktop?.fields?.file?.url ? `https:${clip.fields?.thumbumbDesktop?.fields?.file?.url}` : '',
-        thumbumbMobile: clip?.fields?.thumbumbMobile?.fields?.file?.url ? `https:${clip.fields?.thumbumbMobile?.fields?.file?.url}` : '',
-    }
-}
-
-
-
-export const transformKnowMore = (item: any) => {
-
-    return {
-        title: item?.fields?.title ?? '',
-        subTitle: item?.fields?.subTitle ?? '',
-        content: documentToHtmlString(item?.fields?.content, {
-            renderNode: {
-                [BLOCKS.PARAGRAPH]: (node, next) => next(node.content).replace('\n', '<br/><br/><br/>')
-            }
-        }) ?? '',
-    }
-}
-
-export const transformCourseTable = (item: any) => {
-    return {
-        title: item?.fields?.title ?? '',
-        age: documentToHtmlString(item?.fields?.age, options) ?? '',
-        course: documentToHtmlString(item?.fields?.course, options) ?? '',
-        show: documentToHtmlString(item?.fields?.show, options) ?? '',
-        exam: documentToHtmlString(item?.fields?.exam, options) ?? '',
     }
 }

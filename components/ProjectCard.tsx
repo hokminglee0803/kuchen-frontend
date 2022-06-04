@@ -1,25 +1,36 @@
 import { Box, Paper, Skeleton, styled } from '@mui/material';
-import { maxWidth } from '@mui/system';
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 import * as React from 'react';
+import { ImageProps } from '../interface/Image';
 
 interface ProjectCardProps {
-    backgroundImage: string;
+    backgroundImage: ImageProps;
     type: string;
     projectName: string;
+    id: string;
+    paddingBottom?: string
 }
 
-export default function ProjectCard({ backgroundImage, type, projectName }: ProjectCardProps) {
+export default function ProjectCard({ backgroundImage, type, projectName, id, paddingBottom }: ProjectCardProps) {
+
+    const router = useRouter();
+
     return <>
         <article className='card' style={{
             position: "relative",
             width: "100%",
-            paddingBottom: "50%",
+            paddingBottom: paddingBottom ?? "50%",
             zIndex: 100,
-            cursor: 'pointer'
-        }} >
-            <Image src={backgroundImage}
-                alt="kuchen"
+            cursor: 'pointer',
+        }}
+            onClick={() => {
+                router.push(`/projects/${id}`)
+            }}
+        >
+            <Image
+                src={backgroundImage.url}
+                alt={backgroundImage.alt}
                 layout="fill"
                 objectFit="cover"
             />
