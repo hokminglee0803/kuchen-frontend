@@ -28,11 +28,11 @@ export default function ProjectCard({ backgroundImage, type, projectName, id, pa
                 router.push(`/projects/${id}`)
             }}
         >
-            <Image
+            <img
                 src={backgroundImage.url}
                 alt={backgroundImage.alt}
-                layout="fill"
-                objectFit="cover"
+                // layout="fill"
+                // objectFit="cover"
             />
             <div
                 className='title'

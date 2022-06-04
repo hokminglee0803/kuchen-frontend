@@ -39,7 +39,7 @@ export default function ProjectMotionCard({ id, backgroundImage, type, projectNa
             zIndex: 100,
             cursor: 'pointer',
           }} >
-            <Image src={backgroundImage}
+            <img src={backgroundImage}
               alt="kuchen"
               layout="fill"
               objectFit="cover"

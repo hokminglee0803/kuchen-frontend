@@ -156,7 +156,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                     }}>
                     <span className="reveal-overlay"
                     />
-                    <Image
+                    <img
                         src={coverImage.url}
                         alt={coverImage.alt}
                         height={coverImage.height}

@@ -178,7 +178,7 @@ const Contact: React.FC<ContactProps> = ({ title, webSettings, coverImage, foote
                         margin: 'auto'
                     }}
                 >
-                    <Image
+                    <img
                         alt={coverImage.alt}
                         src={coverImage.url}
                         width={coverImage.width}
