@@ -94,18 +94,18 @@ const Installation: React.FC<InstallationProps> = ({ title, webSettings, youtube
                 <Grid item xs={12} style={{
                     margin: '5%'
                 }}>
-                    <h1 style={{
+                    <h2 style={{
                         width: '100%',
                         margin: 'auto',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
-                        fontSize: '5vw',
+                        // fontSize: '5vw',
                         marginTop: '30px',
                     }}>
                         {title}
-                    </h1>
+                    </h2>
                     <div style={{
                         width: '20%',
                         margin: 'auto',

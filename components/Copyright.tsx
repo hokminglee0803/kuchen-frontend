@@ -11,7 +11,7 @@ export default function Copyright() {
             marginLeft: isDesktop ? 100 : 30,
             marginTop: 15,
             marginBottom: 20,
-            fontSize: '4vw',
+            fontSize: isDesktop ? 15 : 8,
         }}>
             Copyright
             {'© '}

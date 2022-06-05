@@ -11,6 +11,9 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { PaymentElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import contentfulService from '../utils/service/contentfulService';
+import { transformWebSettings } from '../utils/transformer';
+import { PageSettingProps } from '../interface/PageSetting';
 
 
 const HOME_PATH = process.env.NEXT_PUBLIC_HOME_PATH;
@@ -21,9 +24,10 @@ const options = {
     clientSecret: 'pi_1EUn5sJnRDDqOaR75NylFAz3_secret_0EGmBneWy2Gae67xurZrTvl74',
 };
 interface CheckoutProps {
+    webSettings: PageSettingProps;
 }
 
-const Checkout: React.FC<CheckoutProps> = ({ }) => {
+const Checkout: React.FC<CheckoutProps> = ({ webSettings }) => {
 
     const router = useRouter();
 
@@ -129,7 +133,7 @@ const Checkout: React.FC<CheckoutProps> = ({ }) => {
     return (
         <div>
             <Head>
-                {/* <title>{webSettings?.seoTitle}</title>
+                <title>{webSettings?.seoTitle}</title>
                 <meta name="description" content={webSettings?.seoDescription} />
                 <meta name="keywords" content={webSettings?.seoKeywords} />
                 <meta name="google-site-verification" content="HSeiJF1wIPEmRWl27NIHwrslEwWKO6YuN0AP2IkOVgk" />
@@ -156,7 +160,7 @@ const Checkout: React.FC<CheckoutProps> = ({ }) => {
                 <meta property="og:url" content={`${HOME_PATH}${localePath}`} />
                 <meta property="og:site_name" content="kuchen"></meta>
                 <meta property="og:image" content={webSettings?.openGraphImage} />
-                <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
 
             <ResponsiveAppBar />
@@ -174,18 +178,18 @@ const Checkout: React.FC<CheckoutProps> = ({ }) => {
                 <Grid item xs={12} style={{
                     margin: '5%'
                 }}>
-                    <h1 style={{
+                    <h2 style={{
                         width: '100%',
                         margin: 'auto',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
-                        fontSize: '5vw',
+                        // fontSize: '5vw',
                         marginTop: '30px',
                     }}>
                         {t('checkout')}
-                    </h1>
+                    </h2>
                     <div style={{
                         width: '30%',
                         margin: 'auto',
@@ -561,10 +565,15 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         `../locales/${locale}.json`
     );
 
+    const homePage = await contentfulService.getEntriesById('AGUYX5I3RP6SBWWe7Rtzt', locale);
+
+    const { seoSetting } = homePage?.[0]?.fields;
+
     try {
         return {
             props: {
                 lngDict,
+                webSettings: transformWebSettings(seoSetting),
             },
             revalidate: 1,
         };

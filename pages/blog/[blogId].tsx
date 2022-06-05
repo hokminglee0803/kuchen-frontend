@@ -119,7 +119,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                     justifyContent: 'center',
                     alignItems: 'center',
                     textAlign: 'center',
-                    fontSize: '5vw',
+                    // fontSize: '5vw',
                     marginTop: '30px',
                 }}>
                     {title}
@@ -180,7 +180,12 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
             </Grid>
         </Grid>
 
-        <Grid container>
+        <Grid
+            spacing={0}
+            alignItems="center"
+            direction="row"
+            justifyContent="space-around"
+            container>
             {
                 prevId ? <Grid item style={{
                     width: '15%',
@@ -210,7 +215,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                             backgroundColor: 'orange',
                         }} />
                     </div>
-            </Grid> : ''
+                </Grid> : ''
             }
 
             <div style={{
@@ -218,8 +223,8 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
             }} />
             {
                 nextId ? <Grid item style={{
-                    width: '15%',
-                    margin: 10,
+                    width: '13%',
+                    margin: 15,
                     cursor: 'pointer'
                 }}
                     onClick={() => {
@@ -238,7 +243,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                         <div
                             style={{
                                 fontSize: 18,
-                                padding: '0 1rem',
+                                // padding: '0 1rem',
                                 color: 'orange'
                             }}
                         >

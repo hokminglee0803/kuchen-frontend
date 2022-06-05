@@ -110,9 +110,9 @@ const Blog: React.FC<BlogsProps> = ({ title, webSettings, blogs, total }) => {
                 fontSize: 25,
                 background: 'url(https://images.ctfassets.net/1hz59jvvggjc/7LRZsfEVcYVM7lrwZyDS75/27b73c0889187f837b4971f4c0e72839/Background.jpeg)'
             }}>
-                <h1>
+                <h2>
                     {title}
-                </h1>
+                </h2>
             </Box>
 
             {
@@ -131,7 +131,7 @@ const Blog: React.FC<BlogsProps> = ({ title, webSettings, blogs, total }) => {
             <Box style={{
                 display: 'flex',
                 margin: 'auto',
-                width: '85%',
+                width: isDesktop ? '85%' : '95%',
                 marginTop: '5%',
                 marginBottom: '5%',
                 justifyContent: 'center',

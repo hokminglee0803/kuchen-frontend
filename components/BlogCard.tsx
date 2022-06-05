@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, Grid, Paper, Skeleton, styled, Typography, Fade } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Grid, Paper, Skeleton, styled, Typography, Fade, useTheme, useMediaQuery } from '@mui/material';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -21,13 +21,18 @@ export default function BlogCard({ id, image, title, createdAt, description }: B
 
     const localePath = locale === 'en' ? '' : '/zh';
 
+
+    const theme = useTheme();
+
+    const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
     return <>
         <article>
             <Fade in={true} timeout={1000}>
                 <Card sx={{
                     display: 'flex',
                     margin: 'auto',
-                    width: '85%',
+                    width: isDesktop ? '85%' : '95%',
                     marginTop: '5%',
                     marginBottom: '5%'
                 }} elevation={0}>
@@ -50,14 +55,16 @@ export default function BlogCard({ id, image, title, createdAt, description }: B
                                 </h3>
                                 <Typography style={{
                                     color: 'grey',
-                                    fontSize: 10
+                                    fontSize: 10,
+                                    marginTop: 10,
                                 }}>
                                     {createdAt}
                                 </Typography>
                                 <br />
                                 <Typography style={{
                                     color: 'grey',
-                                    fontSize: 15
+                                    fontSize: 15,
+                                    lineHeight: 1.5
                                 }}>
                                     <div
                                         dangerouslySetInnerHTML={{ __html: description }} />
