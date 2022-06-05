@@ -162,9 +162,11 @@ const AboutUs: React.FC<AboutUsProps> = ({ webSettings, title, description, serv
 
                                     <FontAwesomeIcon
                                         style={{
-                                            margin: 10
+                                            margin: 10,
+                                            width: 90,
+                                            height: 90
                                         }}
-                                        size='5x'
+                                        // size='5x'
                                         icon={service.iconId as IconProp} />
                                     <Typography style={{
                                         fontSize: 20,
@@ -190,9 +192,11 @@ const AboutUs: React.FC<AboutUsProps> = ({ webSettings, title, description, serv
 
                                     <FontAwesomeIcon
                                         style={{
-                                            margin: 10
+                                            margin: 10,
+                                            width: 90,
+                                            height: 90
                                         }}
-                                        size='5x'
+                                        // size='5x'
                                         icon={service.iconId as IconProp} />
                                     <Typography style={{
                                         fontSize: 20,
