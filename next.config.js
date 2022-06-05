@@ -3,6 +3,7 @@ const nextConfig = {
   trailingSlash: true,
   images: {
     domains: [
+      'assets.vercel.com',
       'res.cloudinary.com',
       'images.ctfassets.net',
       'www.kuchen.com.hk',
