@@ -139,7 +139,7 @@ const ProjectDetailPage: React.FC<ProjectDetialPageProps> = ({ webSettings, name
                     style={{
                         width: '90%',
                         margin: 'auto',
-                        display: 'flex',
+                        // display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
