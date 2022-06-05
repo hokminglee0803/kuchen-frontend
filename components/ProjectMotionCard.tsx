@@ -1,4 +1,4 @@
-import { Zoom } from "@mui/material";
+import { Zoom, useTheme, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion"
 import Image from 'next/image'
 import { useRouter } from "next/router";
@@ -15,6 +15,9 @@ export default function ProjectMotionCard({ id, backgroundImage, type, projectNa
 
   const router = useRouter();
 
+  const theme = useTheme();
+
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <motion.div
@@ -24,7 +27,8 @@ export default function ProjectMotionCard({ id, backgroundImage, type, projectNa
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
       style={{
-        marginRight: '5%'
+        marginRight: '5%',
+        maxWidth: isDesktop ? '100%' : 375
       }}
       onClick={() => {
         router.push(`/projects/${id}`)

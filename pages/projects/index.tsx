@@ -26,7 +26,7 @@ const Project: React.FC<ProjectProps> = ({ title, webSettings, projects }) => {
 
     const { locale } = router;
 
-    const localePath = locale === 'en' ? '/en/' : '/';
+    const localePath = locale === 'en' ? '' : '/zh';
 
     const { t } = useI18n();
 
@@ -43,6 +43,10 @@ const Project: React.FC<ProjectProps> = ({ title, webSettings, projects }) => {
             setInit(false)
         }
     }, [init])
+
+    useEffect(() => {
+        setSelectedType('');
+    }, [locale])
 
     return (
         <div>
@@ -87,6 +91,10 @@ const Project: React.FC<ProjectProps> = ({ title, webSettings, projects }) => {
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
+            // style={{
+            //     width: '85%',
+            //     margin: 'auto',
+            // }}
             >
                 <ButtonGroup disableElevation variant="contained">
                     <div style={{
@@ -104,7 +112,8 @@ const Project: React.FC<ProjectProps> = ({ title, webSettings, projects }) => {
                             key={index}
                             style={{
                                 margin: 20,
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                width: 70
                             }}
                             onClick={() => {
                                 setSelectedType(item)
@@ -116,13 +125,16 @@ const Project: React.FC<ProjectProps> = ({ title, webSettings, projects }) => {
                 </ButtonGroup>
             </Grid>
 
-            <section style={{ paddingBottom: 100 }}>
+            <section style={{
+                paddingBottom: 100
+            }}>
                 <motion.div
                     layout
                     className="popular-movies"
                     style={{
-                        width: '95%',
-                        margin: 'auto'
+                        width: isDesktop ? '95%' : '100%',
+                        margin: 'auto',
+                        maxWidth: isDesktop ? '100%' : 375
                     }}
                 >
                     <AnimatePresence>
@@ -146,7 +158,6 @@ const Project: React.FC<ProjectProps> = ({ title, webSettings, projects }) => {
 
         </div >
     )
-
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {

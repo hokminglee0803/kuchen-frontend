@@ -258,7 +258,7 @@ const ResponsiveAppBar = () => {
                         },
                     }}
                 >
-                    <Image alt={'kuchen'} src={'https://images.ctfassets.net/1hz59jvvggjc/5463W1WhzJ1fR4KqEyd1Gc/4e4c4b884cda590158f6d75f3e2a147f/logo.png'} width={148} height={35} />
+                    <Image alt={'kuchen'} src={'https://images.ctfassets.net/1hz59jvvggjc/5463W1WhzJ1fR4KqEyd1Gc/4e4c4b884cda590158f6d75f3e2a147f/logo.png'} width={100} height={22} />
                 </Button>
                 <div style={{ flexGrow: 1 }} />
                 <IconButton
@@ -270,7 +270,7 @@ const ResponsiveAppBar = () => {
                     }}>
                     <ShareIcon
                         style={{ color: 'black' }}
-                        fontSize='large' />
+                        fontSize='small' />
                 </IconButton>
                 <Slide direction="down" in={shareShow} mountOnEnter unmountOnExit>
                     <Box>
@@ -279,14 +279,14 @@ const ResponsiveAppBar = () => {
                         }}>
                             <FacebookIcon
                                 style={{ color: 'black' }}
-                                fontSize='medium' />
+                                fontSize='small' />
                         </IconButton>
                         <IconButton onClick={() => {
                             window.open('https://www.instagram.com/kuchenhk/');
                         }}>
                             <InstagramIcon
                                 style={{ color: 'black' }}
-                                fontSize='medium' />
+                                fontSize='small' />
                         </IconButton>
                     </Box>
                 </Slide>
@@ -300,7 +300,7 @@ const ResponsiveAppBar = () => {
                     }}>
                     <LanguageIcon
                         style={{ color: 'black' }}
-                        fontSize='large' />
+                        fontSize='small' />
                 </IconButton>
                 <Slide direction="down" in={langShow} mountOnEnter unmountOnExit>
                     <Box>
@@ -331,7 +331,7 @@ const ResponsiveAppBar = () => {
                     color="inherit"
                 >
                     <MenuIcon style={{ color: 'black' }}
-                        fontSize='large' />
+                        fontSize='medium' />
                 </IconButton>
             </Toolbar>
         </Container>
@@ -340,7 +340,7 @@ const ResponsiveAppBar = () => {
     return (
         <AppBar
             elevation={0}
-            position="fixed" style={{ backgroundColor: 'white', height: 80, zIndex: 400 }}>
+            position="fixed" style={{ backgroundColor: 'white', height: isDesktop ? 80 : 65, zIndex: 400 }}>
             {
                 isDesktop ? desktopBar : mobileBar
             }

@@ -1,12 +1,17 @@
 import * as React from 'react';
-
+import { useTheme, useMediaQuery } from '@mui/material';
 export default function Copyright() {
+
+    const theme = useTheme();
+
+    const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
     return <>
         <div style={{
-            marginLeft: 100,
+            marginLeft: isDesktop ? 100 : 30,
             marginTop: 15,
             marginBottom: 20,
-            fontSize: 5,
+            fontSize: '4vw',
         }}>
             Copyright
             {'© '}

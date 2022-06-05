@@ -32,5 +32,6 @@
     "town_required": "請輸入鄉鎮市",
     "state_required": "請輸入縣",
     "zip_required": "請輸入郵遞區號",
-    "email_address_required": "請輸入電子郵件"
+    "email_address_required": "請輸入電子郵件",
+    "service_info": "服務內容:"
 }

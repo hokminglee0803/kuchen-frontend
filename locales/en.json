@@ -32,5 +32,6 @@
     "town_required": "Please enter Town / City",
     "state_required": "Please enter State / Country",
     "zip_required": "Please enter Postcode / ZIP",
-    "email_address_required": "Please enter Email Address"
+    "email_address_required": "Please enter Email Address",
+    "service_info": "OUR SERVICES INCLUDE:"
 }
