@@ -115,51 +115,64 @@ const IndexPage: React.FC<IndexPageProps> = ({ webSettings, projects, footer, ca
               style={{
                 background: `url(${item.image.url})`,
                 height: '590px',
-                backgroundSize: '100% auto'
+                backgroundSize: 'cover',
+                padding: 0,
+
               }}>
               {({ isActive }) => (
                 <Slide
                   style={{
                     // @ts-ignore
                     transitionDelay: 350,
-                    height: '100%'
+                    height: '100%',
                   }}
                   direction="up" in={isActive} timeout={700} mountOnEnter unmountOnExit>
-                  <div className="text" data-swiper-parallax="-100" style={{
-                    marginTop: isDesktop ? '12%' : '38%',
-                    background: 'white',
-                    height: isDesktop ? 225 : 225,
-                    width: 350,
-                    color: 'black',
-                    opacity: 0.8
-                  }}>
-                    <Box style={{
-                      height: '100%',
-                      textAlign: 'center',
-                      fontSize: 20,
-                      margin: 25,
+                  <Grid container style={{
+                    display: 'flex',
+                    margin: 'auto',
+                    width: '85%',
+                    // justifyContent: 'center',
+                    // alignItems: 'center',
+                  }}
+                  >
+                    <div className="text" data-swiper-parallax="-100" style={{
+                      marginTop: isDesktop ? '20%' : '45%',
+                      background: 'white',
+                      height: isDesktop ? 225 : 250,
+                      width: isDesktop ? 350 : '100%',
+                      color: 'black',
+                      opacity: 0.8,
+                      margin: 'auto',
+                      marginLeft: isDesktop ? 0 : 'auto',
                     }}>
-                      <br />
-                      <Typography style={{
-                        marginTop: 5,
-                        lineHeight: 1,
+                      <Box style={{
+                        height: '100%',
+                        textAlign: 'center',
+                        fontSize: 20,
+                        margin: 25,
+                        marginTop: '12%'
                       }}>
-                        <b style={{
-                          fontWeight: 1000,
+                        <Typography style={{
+                          lineHeight: 1,
+
                         }}>
-                          {item.title}
-                        </b>
-                      </Typography>
-                      <Typography style={{
-                        marginTop: 20,
-                        lineHeight: locale === 'en' ? 1 : 1.5,
-                      }}>
-                        <p>
-                          {item.description}
-                        </p>
-                      </Typography>
-                    </Box>
-                  </div>
+                          <b style={{
+                            fontWeight: 1000,
+                          }}>
+                            {item.title}
+                          </b>
+                        </Typography>
+                        <Typography style={{
+                          marginTop: 20,
+                          lineHeight: locale === 'en' ? 1 : 1.5,
+                        }}>
+                          <p>
+                            {item.description}
+                          </p>
+                        </Typography>
+                      </Box>
+                    </div>
+                  </Grid>
                 </Slide>
               )}
             </SwiperSlide>

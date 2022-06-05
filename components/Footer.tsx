@@ -1,4 +1,5 @@
-import { Box, Grid, Paper, Skeleton, styled, Typography } from '@mui/material';
+import { GetStaticProps } from 'next';
+import { Box, Grid, Paper, Skeleton, styled, Typography, useTheme, useMediaQuery } from '@mui/material';
 import { useI18n } from 'next-localization';
 import * as React from 'react';
 
@@ -16,9 +17,24 @@ export default function Footer({ address, officeHour, phone, whatsapp, whatsappW
 
     const { t } = useI18n();
 
+    const theme = useTheme();
+
+    const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
     return <>
-        <footer style={{ paddingLeft: 70, paddingTop: 80, paddingBottom: 150, color: 'white', background: 'black' }}>
-            <Grid container>
+        <footer style={{
+            width: '100%',
+            paddingTop: isDesktop ? 80 : 20,
+            paddingBottom: 150,
+            color: 'white',
+            background: 'black'
+        }}>
+            <Grid
+                style={{
+                    width: isDesktop ? '95%' : '90%',
+                    margin: 'auto',
+                }}
+                container>
                 <Grid item xs={12} sm={6}>
                     <Box>
                         <Typography style={{ margin: 8, fontSize: 15 }}>
@@ -77,8 +93,8 @@ export default function Footer({ address, officeHour, phone, whatsapp, whatsappW
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <iframe
-                        width="80%"
-                        height="120%"
+                        width="100%"
+                        height={isDesktop ? '120%' : '180%'}
                         id="gmap_canvas"
                         src={googleMapLink} scrolling="no" ></iframe>
                 </Grid>

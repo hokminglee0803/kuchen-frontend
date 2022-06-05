@@ -59,7 +59,8 @@ export default function BlogCard({ id, image, title, createdAt, description }: B
                                     color: 'grey',
                                     fontSize: 15
                                 }}>
-                                    {description}
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: description }} />
                                 </Typography>
                                 <br />
                                 <a
