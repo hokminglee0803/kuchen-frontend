@@ -12,6 +12,9 @@ const nextConfig = {
       'kuchen-git-main-hokminglee0803.vercel.app',
       'kuchen-6sudsmoxh-hokminglee0803.vercel.app'
     ],
+    path: '/_next/image',
+    loader: 'default',
+    https: true,
   },
   i18n: {
     locales: ['zh', 'en'],
