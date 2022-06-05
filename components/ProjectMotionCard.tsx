@@ -39,7 +39,7 @@ export default function ProjectMotionCard({ id, backgroundImage, type, projectNa
             zIndex: 100,
             cursor: 'pointer',
           }} >
-            <Image src={`${backgroundImage}`}
+            <Image src={`https://res.cloudinary.com/demo/image/fetch/${backgroundImage}`}
               alt="kuchen"
               layout="fill"
               objectFit="cover"
