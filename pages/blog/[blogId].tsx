@@ -157,7 +157,7 @@ const BlogDetail: React.FC<BlogEntryProps> = ({ title, webSettings, coverImage, 
                     <span className="reveal-overlay"
                     />
                     <Image
-                        src={`https://res.cloudinary.com/demo/image/fetch/${coverImage.url}`}
+                        src={`${coverImage.url}`}
                         alt={coverImage.alt}
                         height={coverImage.height}
                         width={coverImage.width}

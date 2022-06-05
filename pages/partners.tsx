@@ -139,7 +139,7 @@ const Partners: React.FC<PartnersProps> = ({ title, webSettings, description, al
                                 >
                                     <Image
                                         alt={item.alt}
-                                        src={`https://res.cloudinary.com/demo/image/fetch/${item.url}`}
+                                        src={`${item.url}`}
                                         width={item.width}
                                         height={item.height} />
                                 </Box>
