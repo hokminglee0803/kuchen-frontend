@@ -83,7 +83,8 @@ export default function Footer({ address, officeHour, phone, whatsapp, whatsappW
                             <a
                                 style={{
                                     color: "orange",
-                                    cursor: 'pointer'
+                                    cursor: 'pointer',
+                                    textTransform: 'lowercase'
                                 }}
                                 href={`mailto:${email}`}>
                                 {email}

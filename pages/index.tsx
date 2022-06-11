@@ -123,10 +123,10 @@ const IndexPage: React.FC<IndexPageProps> = ({ webSettings, projects, footer, ca
                 <Slide
                   style={{
                     // @ts-ignore
-                    transitionDelay: 350,
+                    transitionDelay: 3000,
                     height: '100%',
                   }}
-                  direction="up" in={isActive} timeout={700} mountOnEnter unmountOnExit>
+                  direction="up" in={isActive} timeout={2500} mountOnEnter unmountOnExit>
                   <Grid container style={{
                     display: 'flex',
                     margin: 'auto',

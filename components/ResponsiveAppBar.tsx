@@ -132,7 +132,7 @@ const ResponsiveAppBar = () => {
                 >
                     {t('blog')}
                 </Button>
-                <Button
+                {/* <Button
                     className='un'
                     disableElevation
                     disableRipple
@@ -150,7 +150,7 @@ const ResponsiveAppBar = () => {
                     }}
                 >
                     {t('installation')}
-                </Button>
+                </Button> */}
                 <Button
                     className='un'
                     disableElevation
