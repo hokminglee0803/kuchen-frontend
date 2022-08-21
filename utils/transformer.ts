@@ -88,6 +88,9 @@ export const transformMarkdown = async (item: any) => {
 //Customized
 
 export const transformProjectDetailToProjectCard = (item: any) => {
+
+    console.log(item?.fields?.coverImage?.fields?.file?.url);
+
     return {
         type: item?.fields?.type ?? '',
         address: item?.fields?.address ?? '',

@@ -180,7 +180,8 @@ const Contact: React.FC<ContactProps> = ({ title, webSettings, coverImage, foote
                 >
                     <Image
                         alt={coverImage.alt}
-                        src={`https://res.cloudinary.com/demo/image/fetch/${coverImage.url}`}
+                        src={coverImage.url}
+                        // src={`https://res.cloudinary.com/demo/image/fetch/${coverImage.url}`}
                         width={coverImage.width}
                         height={coverImage.height} />
                 </Grid>
