@@ -192,7 +192,7 @@ const ResponsiveAppBar = () => {
                                 fontSize='medium' />
                         </IconButton>
                         <IconButton onClick={() => {
-                            window.open('https://www.instagram.com/kuchenhk/');
+                            window.open('https://instagram.com/kuchenkms?igshid=MzRlODBiNWFlZA==');
                         }}>
                             <InstagramIcon
                                 style={{ color: 'black' }}

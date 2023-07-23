@@ -42,7 +42,7 @@ export default class MyDocument extends Document {
                     {/* <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet" /> */}
                     <script
                         async
-                        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+                        src={`https://www.googletagmanager.com/gtag/js?id=G-LKLE6Z9FK5`}
                     />
                     <script
                         dangerouslySetInnerHTML={{
@@ -50,7 +50,7 @@ export default class MyDocument extends Document {
                                 window.dataLayer = window.dataLayer || [];
                                 function gtag(){dataLayer.push(arguments);}
                                 gtag('js', new Date());
-                                gtag('config', '${GA_ID}', {
+                                gtag('config', 'G-LKLE6Z9FK5', {
                                 page_path: window.location.pathname,
                                 });
                             `,
