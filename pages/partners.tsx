@@ -138,6 +138,7 @@ const Partners: React.FC<PartnersProps> = ({ title, webSettings, description, al
                                     }}
                                 >
                                     <Image
+                                        unoptimized
                                         alt={item.alt}
                                         src={item.url}
                                         // src={`https://res.cloudinary.com/demo/image/fetch/${item.url}`}
