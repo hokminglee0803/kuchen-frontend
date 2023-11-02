@@ -29,6 +29,7 @@ export default function ProjectCard({ backgroundImage, type, projectName, id, pa
             }}
         >
             <Image
+                unoptimized
                 // loader={`https://res.cloudinary.com/demo/image/fetch/${backgroundImage.url}`}
                 // src={''}
                 src={backgroundImage.url}

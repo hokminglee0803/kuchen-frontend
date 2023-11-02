@@ -45,6 +45,7 @@ export default function ProjectMotionCard({ id, backgroundImage, type, projectNa
           }} >
             {/* <Image src={`https://res.cloudinary.com/demo/image/fetch/${backgroundImage}`} */}
             <Image src={backgroundImage}
+              unoptimized
               alt="kuchen"
               layout="fill"
               objectFit="cover"

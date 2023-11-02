@@ -54,7 +54,9 @@ const ResponsiveAppBar = () => {
                         },
                     }}
                 >
-                    <Image alt={'kuchen'} src={'https://images.ctfassets.net/1hz59jvvggjc/5463W1WhzJ1fR4KqEyd1Gc/4e4c4b884cda590158f6d75f3e2a147f/logo.png'} width={148} height={35} />
+                    <Image
+                        unoptimized
+                        alt={'kuchen'} src={'https://images.ctfassets.net/1hz59jvvggjc/5463W1WhzJ1fR4KqEyd1Gc/4e4c4b884cda590158f6d75f3e2a147f/logo.png'} width={148} height={35} />
                 </Button>
                 <Button
                     className='un'
@@ -258,7 +260,9 @@ const ResponsiveAppBar = () => {
                         },
                     }}
                 >
-                    <Image alt={'kuchen'} src={'https://images.ctfassets.net/1hz59jvvggjc/5463W1WhzJ1fR4KqEyd1Gc/4e4c4b884cda590158f6d75f3e2a147f/logo.png'} width={100} height={22} />
+                    <Image
+                        unoptimized
+                        alt={'kuchen'} src={'https://images.ctfassets.net/1hz59jvvggjc/5463W1WhzJ1fR4KqEyd1Gc/4e4c4b884cda590158f6d75f3e2a147f/logo.png'} width={100} height={22} />
                 </Button>
                 <div style={{ flexGrow: 1 }} />
                 <IconButton

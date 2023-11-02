@@ -179,6 +179,7 @@ const Contact: React.FC<ContactProps> = ({ title, webSettings, coverImage, foote
                     }}
                 >
                     <Image
+                        unoptimized
                         alt={coverImage.alt}
                         src={coverImage.url}
                         // src={`https://res.cloudinary.com/demo/image/fetch/${coverImage.url}`}
