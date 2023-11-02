@@ -15,6 +15,9 @@ const nextConfig = {
     path: '/_next/image',
     loader: 'default',
     https: true,
+    vercel: {
+      pass: true,
+    },
   },
   i18n: {
     locales: ['zh', 'en'],
