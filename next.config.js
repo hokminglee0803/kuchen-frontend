@@ -13,7 +13,7 @@ const nextConfig = {
       'kuchen-6sudsmoxh-hokminglee0803.vercel.app'
     ],
     path: '/_next/image',
-    loader: 'default',
+    loader: 'none',
     https: true,
     vercel: {
       pass: true,
